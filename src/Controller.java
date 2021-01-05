@@ -9,6 +9,8 @@ import utilies.CsvReader;
 
 public class Controller {
     private CsvReader csvReader;
+    private double accuracy;
+    private Integer[] faultTimesArray;
 
     @FXML
     private TextField accuracyTextField;
@@ -21,6 +23,9 @@ public class Controller {
 
     @FXML
     private Button acceptParametersButton;
+
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private TextArea calcResultTextArea;
@@ -36,9 +41,15 @@ public class Controller {
 
     @FXML
     private void acceptParametersButtonOnMouseClicked(){
-        csvReader.readDataToArray();
-        Integer faultTimesArray[] = csvReader.getFaultTimesArray();
-        double accuracy = Double.parseDouble(accuracyTextField.getText());
+        errorLabel.setVisible(false);
+
+        if(!areInputsValid()){
+            errorLabel.setVisible(true);
+            return;
+        }
+
+        if(calcResultTextArea.getText() != null)
+            calcResultTextArea.clear();
 
         JelinskiMoranda jelinskiMoranda = new JelinskiMoranda(accuracy,faultTimesArray);
         jelinskiMoranda.estimateBigNAndFi();
@@ -64,5 +75,37 @@ public class Controller {
         calcResultTextArea.appendText("\njaki upłynie do momentu wykrycia " +
                 schickWolverton.getNEXT_FAULT_TIME() + " błędu: " + schickWolverton.getEt());
 
+    }
+
+    private boolean areInputsValid(){
+        try {
+                accuracy = accuracyTextField.getText().isEmpty()
+                        ? Double.parseDouble(accuracyTextField.getPromptText())
+                        : Double.parseDouble(accuracyTextField.getText());
+        } catch(NumberFormatException e){
+            errorLabel.setText("Została wprowadzona zła wartość dokładności obliczeń -" +
+                    " powinien być to ułamek w postaci dziesiętnej.");
+            return false;
+        }
+
+        if (accuracy <= 0){
+            errorLabel.setText("Dokładność obliczeń powinna być liczbą dodatnią.");
+            return false;
+        }
+        else if(csvReader == null || csvReader.getFilePath() == null){
+            errorLabel.setText("Nie został wybrany plik .csv.");
+            return false;
+        }
+
+        if (csvReader.getFaultTimesArray() == null)
+            csvReader.readDataToArray();
+        faultTimesArray = csvReader.getFaultTimesArray();
+
+        if(faultTimesArray.length == 0) {
+            errorLabel.setText("Został wybrany pusty plik .csv.");
+            return false;
+        }
+
+        return true;
     }
 }
