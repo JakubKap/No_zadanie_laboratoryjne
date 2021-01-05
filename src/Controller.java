@@ -1,5 +1,4 @@
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -16,13 +15,7 @@ public class Controller {
     private TextField accuracyTextField;
 
     @FXML
-    private Button fileButton;
-
-    @FXML
     private Label selectedFileLabel;
-
-    @FXML
-    private Button acceptParametersButton;
 
     @FXML
     private Label errorLabel;
@@ -55,26 +48,28 @@ public class Controller {
         jelinskiMoranda.estimateBigNAndFi();
 
         calcResultTextArea.appendText("Metoda Jelińskiego-Morandy:");
-        calcResultTextArea.appendText("\n\nWybrana dokładność: " + accuracy);
-        calcResultTextArea.appendText("\nLiczba dotychczas wykrytych błędów: " + jelinskiMoranda.getSmallN());
-        calcResultTextArea.appendText("\nWyznaczony parametr N: " + jelinskiMoranda.getBigN());
-        calcResultTextArea.appendText("\nWyznaczony parametr fi: " + jelinskiMoranda.getFi());
-        calcResultTextArea.appendText("\nWyznaczona wartość oczekiwana czasu, ");
-        calcResultTextArea.appendText("\njaki upłynie do momentu wykrycia " +
-                jelinskiMoranda.getNEXT_FAULT_TIME() + " błędu: " + jelinskiMoranda.getEt());
+        appendResultTextArea(jelinskiMoranda.getSmallN(), jelinskiMoranda.getBigN(),
+                    jelinskiMoranda.getFi(), jelinskiMoranda.getNEXT_FAULT_TIME(),
+                    jelinskiMoranda.getEt());
 
         SchickWolverton schickWolverton = new SchickWolverton(accuracy, faultTimesArray);
         schickWolverton.estimateBigNAndFi();
 
         calcResultTextArea.appendText("\n\nMetoda Schicka-Wolvertona:");
+        appendResultTextArea(schickWolverton.getSmallN(), schickWolverton.getBigN(),
+                    schickWolverton.getFi(), schickWolverton.getNEXT_FAULT_TIME(),
+                    schickWolverton.getEt());
+
+    }
+
+    private void appendResultTextArea(int smallN, int bigN, double fi, int next_fault_time, double et) {
         calcResultTextArea.appendText("\n\nWybrana dokładność: " + accuracy);
-        calcResultTextArea.appendText("\nLiczba dotychczas wykrytych błędów: " + schickWolverton.getSmallN());
-        calcResultTextArea.appendText("\nWyznaczony parametr N: " + schickWolverton.getBigN());
-        calcResultTextArea.appendText("\nWyznaczony parametr fi: " + schickWolverton.getFi());
+        calcResultTextArea.appendText("\nLiczba dotychczas wykrytych błędów: " + smallN);
+        calcResultTextArea.appendText("\nWyznaczony parametr N: " + bigN);
+        calcResultTextArea.appendText("\nWyznaczony parametr fi: " + fi);
         calcResultTextArea.appendText("\nWyznaczona wartość oczekiwana czasu, ");
         calcResultTextArea.appendText("\njaki upłynie do momentu wykrycia " +
-                schickWolverton.getNEXT_FAULT_TIME() + " błędu: " + schickWolverton.getEt());
-
+                next_fault_time + " błędu: " + et);
     }
 
     private boolean areInputsValid(){
