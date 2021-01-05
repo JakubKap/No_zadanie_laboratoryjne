@@ -3,13 +3,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import models.JelinskiMoranda;
 import utilies.CsvReader;
 
 public class Controller {
     private CsvReader csvReader;
 
     @FXML
-    private TextField accuracyTextArea;
+    private TextField accuracyTextField;
 
     @FXML
     private Button fileButton;
@@ -35,5 +36,18 @@ public class Controller {
     @FXML
     private void acceptParametersButtonOnMouseClicked(){
         csvReader.readDataToArray();
+        JelinskiMoranda jelinskiMoranda = new JelinskiMoranda(Double.parseDouble(accuracyTextField.getText()),
+                csvReader.getFaultTimesArray());
+        jelinskiMoranda.estimateBigNAndFi();
+
+        calcResultTextArea.appendText("Metoda Jelińskiego-Morandy:");
+        calcResultTextArea.appendText("\n\nWybrana dokładność: " + accuracyTextField.getText());
+        calcResultTextArea.appendText("\nLiczba dotychczas wykrytych błędów: " + jelinskiMoranda.getSmallN());
+        calcResultTextArea.appendText("\nWyznaczony parametr N: " + jelinskiMoranda.getBigN());
+        calcResultTextArea.appendText("\nWyznaczony parametr fi: " + jelinskiMoranda.getFi());
+        calcResultTextArea.appendText("\nWyznaczona wartość oczekiwana czasu, ");
+        calcResultTextArea.appendText("\njaki upłynie do momentu wykrycia " +
+                jelinskiMoranda.getNEXT_FAULT_TIME() + " błędu: " + jelinskiMoranda.getEt());
+
     }
 }
