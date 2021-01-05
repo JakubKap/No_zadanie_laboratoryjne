@@ -25,7 +25,6 @@ public class CsvReader {
         int returnVal = fileChooser.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             filePath = fileChooser.getSelectedFile().getPath();
-            System.out.println(filePath);
         }
     }
 

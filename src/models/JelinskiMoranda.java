@@ -11,13 +11,10 @@ public class JelinskiMoranda {
 
     public JelinskiMoranda(double accuracy, Integer[] faultTimesArray) {
         this.accuracy = accuracy;
-        System.out.println(accuracy);
         this.faultTimesArray = faultTimesArray;
         this.smallN = this.faultTimesArray.length;
         this.bigN = NEXT_FAULT_TIME + 1;
-        //Sebastian przyjął 242
         this.fi = 0;
-        //0.001
     }
 
     public void estimateBigNAndFi(){
@@ -28,13 +25,6 @@ public class JelinskiMoranda {
             leftSide = countLeftSide();
             rightSide = countRightSide();
 
-            System.out.println("N = " + bigN);
-            System.out.println("leftSide = " + leftSide);
-            System.out.println("rightSide = " + rightSide);
-            System.out.println("fault =" + Math.abs(leftSide - rightSide));
-            boolean cond = Math.abs(leftSide - rightSide) > accuracy;
-            System.out.println("condition = " + cond);
-
             bigN++;
         }
 
@@ -42,8 +32,6 @@ public class JelinskiMoranda {
 
         bigN = bigN - 1;
         et = 1 / (fi*(bigN - NEXT_FAULT_TIME));
-
-        System.out.println("final N = " + bigN);
     }
 
     private double countLeftSide(){

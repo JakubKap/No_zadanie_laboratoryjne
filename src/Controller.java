@@ -37,12 +37,14 @@ public class Controller {
     @FXML
     private void acceptParametersButtonOnMouseClicked(){
         csvReader.readDataToArray();
-        JelinskiMoranda jelinskiMoranda = new JelinskiMoranda(Double.parseDouble(accuracyTextField.getText()),
-                csvReader.getFaultTimesArray());
+        Integer faultTimesArray[] = csvReader.getFaultTimesArray();
+        double accuracy = Double.parseDouble(accuracyTextField.getText());
+
+        JelinskiMoranda jelinskiMoranda = new JelinskiMoranda(accuracy,faultTimesArray);
         jelinskiMoranda.estimateBigNAndFi();
 
         calcResultTextArea.appendText("Metoda Jelińskiego-Morandy:");
-        calcResultTextArea.appendText("\n\nWybrana dokładność: " + accuracyTextField.getText());
+        calcResultTextArea.appendText("\n\nWybrana dokładność: " + accuracy);
         calcResultTextArea.appendText("\nLiczba dotychczas wykrytych błędów: " + jelinskiMoranda.getSmallN());
         calcResultTextArea.appendText("\nWyznaczony parametr N: " + jelinskiMoranda.getBigN());
         calcResultTextArea.appendText("\nWyznaczony parametr fi: " + jelinskiMoranda.getFi());
@@ -50,12 +52,11 @@ public class Controller {
         calcResultTextArea.appendText("\njaki upłynie do momentu wykrycia " +
                 jelinskiMoranda.getNEXT_FAULT_TIME() + " błędu: " + jelinskiMoranda.getEt());
 
-        SchickWolverton schickWolverton = new SchickWolverton(Double.parseDouble(accuracyTextField.getText()),
-                csvReader.getFaultTimesArray());
+        SchickWolverton schickWolverton = new SchickWolverton(accuracy, faultTimesArray);
         schickWolverton.estimateBigNAndFi();
 
         calcResultTextArea.appendText("\n\nMetoda Schicka-Wolvertona:");
-        calcResultTextArea.appendText("\n\nWybrana dokładność: " + accuracyTextField.getText());
+        calcResultTextArea.appendText("\n\nWybrana dokładność: " + accuracy);
         calcResultTextArea.appendText("\nLiczba dotychczas wykrytych błędów: " + schickWolverton.getSmallN());
         calcResultTextArea.appendText("\nWyznaczony parametr N: " + schickWolverton.getBigN());
         calcResultTextArea.appendText("\nWyznaczony parametr fi: " + schickWolverton.getFi());
