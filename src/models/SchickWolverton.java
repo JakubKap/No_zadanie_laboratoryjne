@@ -13,7 +13,7 @@ public class SchickWolverton {
         this.accuracy = accuracy;
         this.faultTimesArray = faultTimesArray;
         this.smallN = this.faultTimesArray.length;
-        this.bigN = 242;
+        this.bigN = NEXT_FAULT_TIME + 1;
         this.fi = 0;
         //0.001
     }
