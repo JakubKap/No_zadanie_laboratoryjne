@@ -79,7 +79,7 @@ public class Controller {
                         : Double.parseDouble(accuracyTextField.getText());
         } catch(NumberFormatException e){
             errorLabel.setText("Została wprowadzona zła wartość dokładności obliczeń -" +
-                    " powinien być to ułamek w postaci dziesiętnej.");
+                    " powinna to być liczba dodatnia.");
             return false;
         }
 
