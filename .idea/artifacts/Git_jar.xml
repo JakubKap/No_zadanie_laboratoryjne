@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="Git:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Git_jar</output-path>
     <root id="archive" name="Zadanie_laboratoryjne_No.jar">
-      <element id="module-output" name="Git" />
+      <element id="module-output" name="Zadanie_laboratoryjne_No" />
     </root>
   </artifact>
 </component>
