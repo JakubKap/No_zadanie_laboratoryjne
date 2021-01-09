@@ -13,7 +13,7 @@ public class JelinskiMoranda {
         this.accuracy = accuracy;
         this.faultTimesArray = faultTimesArray;
         this.smallN = this.faultTimesArray.length;
-        this.bigN = NEXT_FAULT_TIME + 1;
+        this.bigN = NEXT_FAULT_TIME;
         this.fi = 0;
     }
 
