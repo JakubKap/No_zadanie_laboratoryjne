@@ -13,7 +13,6 @@ public class SchickWolverton extends ReliabilityModel{
         do {
             leftSide = countLeftSide();
             rightSide = countRightSide();
-
             bigN++;
         }
 
@@ -30,7 +29,7 @@ public class SchickWolverton extends ReliabilityModel{
             fi += 1 / (((double) bigN - (i - 1)) * sumOfFaultTimesArraySquareElements());
 
         fi = 2*fi;
-        return 2*fi;
+        return fi;
     }
 
     double countRightSide(){
