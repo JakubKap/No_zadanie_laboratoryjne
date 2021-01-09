@@ -1,20 +1,9 @@
 package models;
 
-public class SchickWolverton {
-    private double accuracy;
-    private Integer[] faultTimesArray;
-    private int smallN;
-    private int bigN;
-    private double fi;
-    private double et;
-    private final int NEXT_FAULT_TIME = 241;
+public class SchickWolverton extends ReliabilityModel{
 
     public SchickWolverton(double accuracy, Integer[] faultTimesArray) {
-        this.accuracy = accuracy;
-        this.faultTimesArray = faultTimesArray;
-        this.smallN = this.faultTimesArray.length;
-        this.bigN = NEXT_FAULT_TIME;
-        this.fi = 0;
+        super(accuracy, faultTimesArray);
     }
 
     public void estimateBigNAndFi(){
@@ -34,7 +23,7 @@ public class SchickWolverton {
         et = Math.sqrt(Math.PI / (2*fi*(bigN - NEXT_FAULT_TIME)));
     }
 
-    private double countLeftSide(){
+    double countLeftSide(){
         fi = 0;
 
         for(int i=1; i <= smallN; i++)
@@ -44,7 +33,7 @@ public class SchickWolverton {
         return 2*fi;
     }
 
-    private double countRightSide(){
+    double countRightSide(){
         double result = 2 * smallN;
 
         double denSecPart = 0;
@@ -61,25 +50,5 @@ public class SchickWolverton {
             sum += value*value;
 
         return sum;
-    }
-
-    public int getSmallN() {
-        return smallN;
-    }
-
-    public int getBigN() {
-        return bigN;
-    }
-
-    public double getFi() {
-        return fi;
-    }
-
-    public double getEt() {
-        return et;
-    }
-
-    public int getNEXT_FAULT_TIME() {
-        return NEXT_FAULT_TIME;
     }
 }

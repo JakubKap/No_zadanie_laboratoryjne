@@ -1,20 +1,9 @@
 package models;
 
-public class JelinskiMoranda {
-    private double accuracy;
-    private Integer[] faultTimesArray;
-    private int smallN;
-    private int bigN;
-    private double fi;
-    private double et;
-    private final int NEXT_FAULT_TIME = 241;
+public class JelinskiMoranda extends ReliabilityModel{
 
     public JelinskiMoranda(double accuracy, Integer[] faultTimesArray) {
-        this.accuracy = accuracy;
-        this.faultTimesArray = faultTimesArray;
-        this.smallN = this.faultTimesArray.length;
-        this.bigN = NEXT_FAULT_TIME;
-        this.fi = 0;
+        super(accuracy, faultTimesArray);
     }
 
     public void estimateBigNAndFi(){
@@ -34,7 +23,7 @@ public class JelinskiMoranda {
         et = 1 / (fi*(bigN - NEXT_FAULT_TIME));
     }
 
-    private double countLeftSide(){
+    double countLeftSide(){
         double result = 0;
 
         for(int i=1; i <= smallN; i++)
@@ -43,7 +32,7 @@ public class JelinskiMoranda {
         return result;
     }
 
-    private double countRightSide(){
+    double countRightSide(){
         fi = smallN;
 
         double denSecPart = 0;
@@ -62,25 +51,5 @@ public class JelinskiMoranda {
             sum += value;
 
         return sum;
-    }
-
-    public int getSmallN() {
-        return smallN;
-    }
-
-    public int getBigN() {
-        return bigN;
-    }
-
-    public double getFi() {
-        return fi;
-    }
-
-    public double getEt() {
-        return et;
-    }
-
-    public int getNEXT_FAULT_TIME() {
-        return NEXT_FAULT_TIME;
     }
 }
