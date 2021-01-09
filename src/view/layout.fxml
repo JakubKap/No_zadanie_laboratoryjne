@@ -21,7 +21,7 @@
             <Label fx:id="selectedFileLabel" layoutX="94.0" layoutY="121.0" text="Label" visible="false" />
             <Button fx:id="acceptParametersButton" layoutX="224.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#acceptParametersButtonOnMouseClicked" prefHeight="25.0" prefWidth="147.0" text="Zatwierdź parametry" />
             <TextArea fx:id="calcResultTextArea" editable="false" layoutX="14.0" layoutY="222.0" prefHeight="364.0" prefWidth="568.0" />
-            <TextField fx:id="accuracyTextField" layoutX="180.0" layoutY="20.0" prefHeight="25.0" prefWidth="72.0" promptText="0.001" />
+            <TextField fx:id="accuracyTextField" layoutX="180.0" layoutY="20.0" prefHeight="25.0" prefWidth="147.0" promptText="0.001" />
             <Line endX="495.29290771484375" layoutX="100.0" layoutY="152.0" opacity="0.5" startX="-100.0" />
             <Line endX="525.5" endY="-7.62939453125E-6" layoutX="68.0" layoutY="63.0" opacity="0.5" startX="-100.0" />
             <Label fx:id="errorLabel" layoutX="14.0" layoutY="196.0" text="Label" textFill="#e12b2b" visible="false">
@@ -29,6 +29,11 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
+            <RadioButton fx:id="jmRadioButton" layoutX="173.0" layoutY="83.0" mnemonicParsing="false" text="Model Jeleńskiego-Morandy">
+               <toggleGroup>
+                  <ToggleGroup fx:id="toggleGroup" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="swRadioButton" layoutX="364.0" layoutY="83.0" mnemonicParsing="false" text="Model Shicka-Wolvertona" toggleGroup="$toggleGroup" />
          </children>
       </AnchorPane>
    </children>

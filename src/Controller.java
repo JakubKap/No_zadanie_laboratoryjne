@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import models.JelinskiMoranda;
@@ -16,6 +17,12 @@ public class Controller {
 
     @FXML
     private Label selectedFileLabel;
+
+    @FXML
+    private RadioButton jmRadioButton;
+
+    @FXML
+    private RadioButton swRadioButton;
 
     @FXML
     private Label errorLabel;
@@ -44,21 +51,30 @@ public class Controller {
         if(calcResultTextArea.getText() != null)
             calcResultTextArea.clear();
 
-        JelinskiMoranda jelinskiMoranda = new JelinskiMoranda(accuracy,faultTimesArray);
-        jelinskiMoranda.estimateBigNAndFi();
+        calcResultTextArea.appendText("Trwa obliczanie wyników. Proszę czekać.");
 
-        calcResultTextArea.appendText("Metoda Jelińskiego-Morandy:");
-        appendResultTextArea(jelinskiMoranda.getSmallN(), jelinskiMoranda.getBigN(),
+        if(jmRadioButton.isSelected()) {
+            JelinskiMoranda jelinskiMoranda = new JelinskiMoranda(accuracy, faultTimesArray);
+            jelinskiMoranda.estimateBigNAndFi();
+
+            calcResultTextArea.clear();
+
+            calcResultTextArea.appendText("Metoda Jelińskiego-Morandy:");
+            appendResultTextArea(jelinskiMoranda.getSmallN(), jelinskiMoranda.getBigN(),
                     jelinskiMoranda.getFi(), jelinskiMoranda.getNEXT_FAULT_TIME(),
                     jelinskiMoranda.getEt());
+        } else if(swRadioButton.isSelected()) {
+            SchickWolverton schickWolverton = new SchickWolverton(accuracy, faultTimesArray);
+            schickWolverton.estimateBigNAndFi();
 
-        SchickWolverton schickWolverton = new SchickWolverton(accuracy, faultTimesArray);
-        schickWolverton.estimateBigNAndFi();
+            calcResultTextArea.clear();
 
-        calcResultTextArea.appendText("\n\nMetoda Schicka-Wolvertona:");
-        appendResultTextArea(schickWolverton.getSmallN(), schickWolverton.getBigN(),
+            calcResultTextArea.appendText("Metoda Schicka-Wolvertona:");
+            System.out.println(schickWolverton.getBigN());
+            appendResultTextArea(schickWolverton.getSmallN(), schickWolverton.getBigN(),
                     schickWolverton.getFi(), schickWolverton.getNEXT_FAULT_TIME(),
                     schickWolverton.getEt());
+        }
 
     }
 
@@ -98,6 +114,9 @@ public class Controller {
 
         if(faultTimesArray.length == 0) {
             errorLabel.setText("Został wybrany pusty plik .csv.");
+            return false;
+        } else if(!jmRadioButton.isSelected() && !swRadioButton.isSelected()){
+            errorLabel.setText("Należy wybrać jeden z modeli.");
             return false;
         }
 
