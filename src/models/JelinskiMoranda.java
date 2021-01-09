@@ -20,14 +20,14 @@ public class JelinskiMoranda extends ReliabilityModel{
         while(Math.abs(leftSide - rightSide) > accuracy);
 
         bigN = bigN - 1;
-        et = 1 / (fi*(bigN - NEXT_FAULT_TIME));
+        et = 1d / (fi*(bigN - NEXT_FAULT_TIME));
     }
 
     double countLeftSide(){
         double result = 0;
 
         for(int i=1; i <= smallN; i++)
-            result += 1 / ((double) bigN - (i - 1));
+            result += 1d / (bigN - (i - 1));
 
         return result;
     }

@@ -25,21 +25,24 @@ public class SchickWolverton extends ReliabilityModel{
     double countLeftSide(){
         fi = 0;
 
-        for(int i=1; i <= smallN; i++)
-            fi += 1 / (((double) bigN - (i - 1)) * sumOfFaultTimesArraySquareElements());
+        for(int i=0; i < smallN; i++)
+            fi += 1d / ((bigN - i) * sumOfFaultTimesArraySquareElements());
 
         fi = 2*fi;
         return fi;
     }
 
     double countRightSide(){
-        double result = 2 * smallN;
+        double numerator = 2 * smallN;
 
         double denSecPart = 0;
         for (int i=0; i<smallN; i++)
-            denSecPart += i * faultTimesArray[i] * faultTimesArray[i];
+            denSecPart += i * Math.pow(faultTimesArray[i],2);
 
-        return result/(sumOfFaultTimesArraySquareElements() * bigN - denSecPart);
+        double denFirstPart = sumOfFaultTimesArraySquareElements() * bigN;
+        double denominator = denFirstPart - denSecPart;
+
+        return numerator/denominator;
     }
 
     private double sumOfFaultTimesArraySquareElements(){
