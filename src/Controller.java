@@ -70,7 +70,6 @@ public class Controller {
             calcResultTextArea.clear();
 
             calcResultTextArea.appendText("Metoda Schicka-Wolvertona:");
-            System.out.println(schickWolverton.getBigN());
             appendResultTextArea(schickWolverton.getSmallN(), schickWolverton.getBigN(),
                     schickWolverton.getFi(), schickWolverton.getNEXT_FAULT_TIME(),
                     schickWolverton.getEt());
